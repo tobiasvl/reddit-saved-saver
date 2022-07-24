@@ -26,15 +26,17 @@ for submission in saved:
         os.mkdir(sub_dir)
     with open(sub_dir + submission.id + '.md', 'w', encoding="utf-8") as f:
         f.write('---\n')
-        f.write('id: ' + submission.id + '\n')
+        #f.write('id: ' + submission.id + '\n')
+        f.write('subreddit: /r/' + submission.subreddit.display_name + '\n')
+        f.write('timestamp: ' + str(datetime.utcfromtimestamp(submission.created_utc)) + '\n')
         try:
             f.write('author: /u/' + submission.author.name + '\n')
         except:
             f.write('author: [deleted]\n')
-        f.write('timestamp: ' + str(datetime.utcfromtimestamp(submission.created_utc)) + '\n')
-        f.write('permalink: https://reddit.com' + submission.permalink + '\n')
-        f.write('subreddit: /r/' + submission.subreddit.display_name + '\n')
+        f.write('tags: [reddit, ' + submission.subreddit.display_name + ']\n')
+        #f.write('permalink: https://reddit.com' + submission.permalink + '\n')
         f.write('---\n\n')
+        f.write('Permalink: https://reddit.com' + submission.permalink + '\n')
         if isinstance(submission, Submission):
             f.write('# ' + submission.title + '\n\n')
             if submission.is_self:
@@ -43,3 +45,5 @@ for submission in saved:
                 f.write(submission.url)
         elif isinstance(submission, Comment):
             f.write(submission.body)
+        f.write('\n\n')
+        f.write('#reddit #' + submission.subreddit.display_name)
