@@ -8,7 +8,7 @@ I made this to dump all my saved Reddit stuff into [Obsidian](https://obsidian.m
 Usage
 -----
 
-You need to create a Reddit app on https://old.reddit.com/prefs/apps/ and then put the client ID, secret key, as well as your Reddit username and password into `config.ini`.
+You need to create a Reddit app on https://old.reddit.com/prefs/apps/ and then put the client ID, secret key, as well as your Reddit username and password into `config.py`.
 
 Make sure `praw` is installed, and then run the script with `python reddit-saved-saver.py`.
 

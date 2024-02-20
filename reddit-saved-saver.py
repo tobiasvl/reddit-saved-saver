@@ -13,7 +13,7 @@ print("Fetching...")
 try:
     saved = reddit.user.me().saved(limit=1000)
 except:
-    sys.exit("Failed to find your saved posts, did you add your credentials to config.ini?")
+    sys.exit("Failed to find your saved posts, did you add your credentials to config.py?")
 
 top_dir = 'reddit/'
 
@@ -24,9 +24,10 @@ for submission in saved:
     sub_dir = top_dir + submission.subreddit.display_name + '/'
     if not os.path.exists(sub_dir):
         os.mkdir(sub_dir)
+
     with open(sub_dir + submission.id + '.md', 'w', encoding="utf-8") as f:
         f.write('---\n')
-        #f.write('id: ' + submission.id + '\n')
+        f.write('id: ' + submission.id + '\n')
         f.write('subreddit: /r/' + submission.subreddit.display_name + '\n')
         f.write('timestamp: ' + str(datetime.utcfromtimestamp(submission.created_utc)) + '\n')
         try:
@@ -34,9 +35,8 @@ for submission in saved:
         except:
             f.write('author: [deleted]\n')
         f.write('tags: [reddit, ' + submission.subreddit.display_name + ']\n')
-        #f.write('permalink: https://reddit.com' + submission.permalink + '\n')
+        f.write('permalink: https://reddit.com' + submission.permalink + '\n')
         f.write('---\n\n')
-        f.write('Permalink: https://reddit.com' + submission.permalink + '\n')
         if isinstance(submission, Submission):
             f.write('# ' + submission.title + '\n\n')
             if submission.is_self:
@@ -46,4 +46,3 @@ for submission in saved:
         elif isinstance(submission, Comment):
             f.write(submission.body)
         f.write('\n\n')
-        f.write('#reddit #' + submission.subreddit.display_name)
